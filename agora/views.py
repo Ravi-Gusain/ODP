@@ -11,18 +11,20 @@ from django.shortcuts import render
 from .agora_key.RtcTokenBuilder import RtcTokenBuilder, Role_Attendee
 import pusher
 
-AGORA_APP_ID="762e3568f1c543b69629833802a49f84"
-AGORA_APP_CERTIFICATE="087f7b2866ba44929600a4a6812c750f"
-
 # Instantiate a Pusher Client
 pusher_client = pusher.Pusher(
-  app_id='1367422',
-  key='b02b30d79b76545d9b87',
-  secret='aecb7e49dc19e8a7566a',
+  app_id='1367488',
+  key='501dbf8dec70d4bd45aa',
+  secret='dd5996897870fc16038e',
   cluster='ap2',
   ssl=True
 )
 
+def home(request):
+    return render(request, 'home.html')
+
+def debate(request):
+    return render(request, 'debate.html')
 
 @login_required(login_url='/admin/')
 def index(request):
@@ -46,8 +48,8 @@ def pusher_auth(request):
 
 
 def generate_agora_token(request):
-    appID = 'AGORA_APP_ID'
-    appCertificate = 'AGORA_APP_CERTIFICATE'
+    appID = '8e7428cd38694dfaa198ae51172b300a'
+    appCertificate = 'c2aacae8b50647628daee1cbfab8f264'
     channelName = json.loads(request.body.decode(
         'utf-8'))['channelName']
     userAccount = request.user.username
@@ -56,7 +58,7 @@ def generate_agora_token(request):
     privilegeExpiredTs = currentTimestamp + expireTimeInSeconds
 
     token = RtcTokenBuilder.buildTokenWithAccount(
-        appID, appCertificate, channelName, userAccount, Role_Attendee, privilegeExpiredTs)
+        appID, appCertificate, channelName, userAccount, Role_Attendee, privilegeExpiredTs)\
 
     return JsonResponse({'token': token, 'appID': appID})
 

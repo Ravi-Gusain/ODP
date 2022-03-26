@@ -103,7 +103,6 @@ const app = new Vue({
             },
           }
         );
-
         this.initializeAgora(tokenRes.data.appID);
         this.joinRoom(tokenRes.data.token, channelName);
       } catch (error) {
